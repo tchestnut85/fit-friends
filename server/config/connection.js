@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 
+// ! Turn mongoose debug mode on or off by commenting/uncommenting:
+mongoose.set('debug', true);
+
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/fit-friends', {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
@@ -8,4 +11,3 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/fit-friends', {
 });
 
 module.exports = mongoose.connection;
-console.log('mongoose.connection:', mongoose.connection);
