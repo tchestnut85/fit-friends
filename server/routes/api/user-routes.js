@@ -26,7 +26,33 @@ router.post('/', async ({ body }, res) => {
 	}
 });
 
+// Login a user
+router.post('/login', async ({ body }, res) => {
+	try {
+		const user = await User.findOne({
+			$or: [{ username: body.username }, { email: body.email }],
+		});
+
+		if (!user) {
+			return res.status(400).json({ message: 'Invalid username or email.' });
+		}
+
+		const correctPassword = await user.isCorrectPassword(body.password);
+
+		if (!correctPassword) {
+			return res.status(400).json({ message: 'Invalid password.' });
+		}
+
+		const token = signToken(user);
+		res.json({ user, token });
+	} catch (err) {
+		console.error(`Error: ${err.message}`);
+		res.status(500).send({ message: `Server error: ${err.message}` });
+	}
+});
+
 // Get all users
+// Private route
 router.get('/', authMiddleware, async (req, res) => {
 	try {
 		const users = await User.find({})
@@ -44,5 +70,14 @@ router.get('/', authMiddleware, async (req, res) => {
 		res.status(500).send({ message: `Server error: ${err.message}` });
 	}
 });
+
+// Get one user
+// Private route
+
+// Edit a user
+// Private route
+
+// Delete a user
+// Private route
 
 module.exports = router;
