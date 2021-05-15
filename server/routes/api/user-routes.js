@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const User = require('../../models');
-const { signToken } = require('../../utils/auth');
+const { authMiddleware, signToken } = require('../../utils/auth');
 
 // Create a user
 router.post('/', async ({ body }, res) => {
@@ -27,6 +27,22 @@ router.post('/', async ({ body }, res) => {
 });
 
 // Get all users
-// router.get('/', (req, res) => {});
+router.get('/', authMiddleware, async (req, res) => {
+	try {
+		const users = await User.find({})
+			// .populate({ path: 'teams', select: '-__v' }) // activate later after Team model gets created
+			.select('-__v -password -email')
+			.sort({ createdAt: 'desc' });
+
+		if (!users) {
+			return res.status(400).json({ message: 'Users not found.' });
+		}
+
+		res.json(users);
+	} catch (err) {
+		console.error(`Error: ${err.message}`);
+		res.status(500).send({ message: `Server error: ${err.message}` });
+	}
+});
 
 module.exports = router;

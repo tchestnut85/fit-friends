@@ -34,6 +34,10 @@ const userSchema = new Schema(
 				ref: 'Team',
 			},
 		],
+		createdAt: {
+			type: Date,
+			default: Date.now,
+		},
 	},
 	{
 		toJSON: {
