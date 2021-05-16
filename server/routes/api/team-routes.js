@@ -36,7 +36,7 @@ router.get('/', auth, async ({ body }, res) => {
         const team = await Team.findOne({ _id: body._id });
 
         if (!team) {
-            return res.status(400).json({ message: 'Team not found.' });
+            return res.status(404).json({ message: 'Team not found.' });
         }
 
         res.json(team);
@@ -50,13 +50,17 @@ router.get('/', auth, async ({ body }, res) => {
 
 // Edit a team's info
 // Put route - private
-router.put('/:id', auth, async ({ user, body, params }, res) => {
+router.put('/:id', auth, async ({ body, params }, res) => {
     try {
         const updatedTeam = await Team.findOneAndUpdate(
             { _id: params.id },
             body,
             { new: true, runValidators: true }
         );
+
+        if (!updatedTeam) {
+            return res.status(404).json({ message: 'Team not found.' });
+        }
 
         res.json(updatedTeam);
     } catch (err) {
@@ -69,17 +73,17 @@ router.put('/:id', auth, async ({ user, body, params }, res) => {
 
 // Add members to a team
 // Put route - private
-router.put('/:id/members', auth, async ({ user, body, params }, res) => {
-    console.log('user:', user);
-    console.log('params:', params);
-    console.log('body:', body);
-
+router.put('/:id/members', auth, async ({ body, params }, res) => {
     try {
         const updatedTeam = await Team.findOneAndUpdate(
             { _id: params.id },
             { $addToSet: { members: body.members } },
             { new: true, runValidators: true }
         );
+
+        if (!updatedTeam) {
+            return res.status(404).json({ message: 'Team not found.' });
+        }
 
         res.json(updatedTeam);
     } catch (err) {
@@ -91,18 +95,28 @@ router.put('/:id/members', auth, async ({ user, body, params }, res) => {
 });
 
 // Remove user from a team
-// Put route - private
-// router.put('/:id', auth, async({params}, res) => {
+// DELETE route - private
+router.delete('/:teamId/members/:memberId', auth, async ({ params }, res) => {
+    console.log('params:', params);
+    try {
+        const updatedTeam = await Team.findOneAndUpdate(
+            { _id: params.teamId },
+            { $pull: { members: params.memberId } },
+            { new: true, runValidators: true }
+        );
 
-//     try {
-//         const updatedTeam = await Team.findOneAndUpdate({_id: params.id}, )
-//     } catch(err) {
-//               console.error(`Error: ${err.message}`);
-//               res.status(500).send({
-//                   message: `Server error: ${err.message}`,
-//               });
-//     }
-// })
+        if (!updatedTeam) {
+            return res.status(404).json({ message: 'Team not found.' });
+        }
+
+        res.json(updatedTeam);
+    } catch (err) {
+        console.error(`Error: ${err.message}`);
+        res.status(500).send({
+            message: `Server error: ${err.message}`,
+        });
+    }
+});
 
 // Delete a team
 // Delete route - private
