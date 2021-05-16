@@ -48,13 +48,9 @@ router.get('/', auth, async ({ body }, res) => {
     }
 });
 
-// Add user to a team
+// Edit a team's info
 // Put route - private
 router.put('/:id', auth, async ({ user, body, params }, res) => {
-    console.log('user:', user);
-    console.log('params:', params);
-    console.log('body:', body);
-
     try {
         const updatedTeam = await Team.findOneAndUpdate(
             { _id: params.id },
@@ -71,8 +67,42 @@ router.put('/:id', auth, async ({ user, body, params }, res) => {
     }
 });
 
+// Add members to a team
+// Put route - private
+router.put('/:id/members', auth, async ({ user, body, params }, res) => {
+    console.log('user:', user);
+    console.log('params:', params);
+    console.log('body:', body);
+
+    try {
+        const updatedTeam = await Team.findOneAndUpdate(
+            { _id: params.id },
+            { $addToSet: { members: body.members } },
+            { new: true, runValidators: true }
+        );
+
+        res.json(updatedTeam);
+    } catch (err) {
+        console.error(`Error: ${err.message}`);
+        res.status(500).send({
+            message: `Server error: ${err.message}`,
+        });
+    }
+});
+
 // Remove user from a team
 // Put route - private
+// router.put('/:id', auth, async({params}, res) => {
+
+//     try {
+//         const updatedTeam = await Team.findOneAndUpdate({_id: params.id}, )
+//     } catch(err) {
+//               console.error(`Error: ${err.message}`);
+//               res.status(500).send({
+//                   message: `Server error: ${err.message}`,
+//               });
+//     }
+// })
 
 // Delete a team
 // Delete route - private
