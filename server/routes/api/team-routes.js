@@ -1,10 +1,10 @@
 const router = require('express').Router();
-const Team = require('../../models/Team');
-const { authMiddleware: auth, signToken } = require('../../utils/auth');
+const { User, Team } = require('../../models');
+const { authMiddleware: auth } = require('../../utils/auth');
 
 // Create a team
 // Post route - Private
-router.post('/', auth, async ({ body }, res) => {
+router.post('/', auth, async ({ user, body }, res) => {
     try {
         const team = await Team.create(body);
 
@@ -12,6 +12,31 @@ router.post('/', auth, async ({ body }, res) => {
             return res.status(400).json({
                 message: 'There was an error when creating the team.',
             });
+        }
+
+        const updatedUser = await User.findOneAndUpdate(
+            { _id: user._id },
+            { $addToSet: { teams: team._id } },
+            { new: true, runValidators: true }
+        ).select('-password -__v');
+
+        res.json({ team, updatedUser });
+    } catch (err) {
+        console.error(`Error: ${err.message}`);
+        res.status(500).send({
+            message: `Server error: ${err.message}`,
+        });
+    }
+});
+
+// Get a single team that a user belongs to
+// Get route - private
+router.get('/', auth, async ({ body }, res) => {
+    try {
+        const team = await Team.findOne({ _id: body._id });
+
+        if (!team) {
+            return res.status(400).json({ message: 'Team not found.' });
         }
 
         res.json(team);
@@ -22,12 +47,6 @@ router.post('/', auth, async ({ body }, res) => {
         });
     }
 });
-
-// Get all teams that a user belongs to
-// Get route - private
-
-// Get a single team that a user belongs to
-// Get route - private
 
 // Add user to a team
 // Put route - private

@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const User = require('../../models');
+const { User } = require('../../models');
 const { authMiddleware: auth, signToken } = require('../../utils/auth');
 
 // Create a user
@@ -14,11 +14,9 @@ router.post('/', async ({ body }, res) => {
         user = await User.create(body);
 
         if (!user) {
-            return res
-                .status(400)
-                .json({
-                    message: 'There was an error when creating the user.',
-                });
+            return res.status(400).json({
+                message: 'There was an error when creating the user.',
+            });
         }
 
         const token = signToken(user);
