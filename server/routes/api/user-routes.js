@@ -60,7 +60,7 @@ router.post('/login', async ({ body }, res) => {
 router.get('/', auth, async (req, res) => {
     try {
         const users = await User.find({})
-            // .populate({ path: 'teams', select: '-__v' }) // activate later after Team model gets created
+            .populate({ path: 'teams', select: '-__v' }) // activate later after Team model gets created
             .select('-__v -password -email')
             .sort({ createdAt: 'desc' });
 

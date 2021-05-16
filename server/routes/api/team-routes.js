@@ -120,5 +120,27 @@ router.delete('/:teamId/members/:memberId', auth, async ({ params }, res) => {
 
 // Delete a team
 // Delete route - private
+router.delete('/:teamId', auth, async ({ params }, res) => {
+    try {
+        const team = await Team.findOneAndDelete({ _id: params.teamId });
+
+        if (!team) {
+            return res.status(404).json({ message: 'Team not found.' });
+        }
+
+        const updatedUsers = await User.updateMany(
+            { teams: params.teamId },
+            { $pull: { teams: params.teamId } },
+            { new: true, runValidators: true }
+        );
+
+        res.json(team);
+    } catch (err) {
+        console.error(`Error: ${err.message}`);
+        res.status(500).send({
+            message: `Server error: ${err.message}`,
+        });
+    }
+});
 
 module.exports = router;
