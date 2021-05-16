@@ -114,9 +114,8 @@ router.get('/:user', auth, async ({ params }, res) => {
 // Edit a user
 // Private route
 router.put('/', auth, async ({ user, body }, res) => {
-	console.log('user:', user);
-	console.log('user id:', user._id);
-	console.log('body:', body);
+	// ! Updating the password is not working correctly, need to fix later.
+	// * Might need a seperate route for changing the password.
 
 	try {
 		const updatedUser = await User.findOneAndUpdate({ _id: user._id }, body, {
@@ -135,7 +134,21 @@ router.put('/', auth, async ({ user, body }, res) => {
 	}
 });
 
-// Delete a user
+// Delete the logged in user by getting ID through the jwt
 // Private route
+router.delete('/', auth, async ({ user }, res) => {
+	try {
+		const deletedUser = await User.findOneAndDelete({ _id: user._id });
+
+		if (!deletedUser) {
+			return res.status(404).json({ message: 'User not found.' });
+		}
+
+		res.json({ message: `User ${user.username} has been deleted.` });
+	} catch (err) {
+		console.error(`Error: ${err.message}`);
+		res.status(500).send({ message: `Server error: ${err.message}` });
+	}
+});
 
 module.exports = router;
