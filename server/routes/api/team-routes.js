@@ -14,9 +14,15 @@ router.post('/', auth, async ({ user, body }, res) => {
             });
         }
 
+        await User.findOneAndUpdate(
+            { _id: user._id },
+            { $addToSet: { teamsOwned: team._id } },
+            { new: true, runValidators: true }
+        ).select('-password -__v');
+
         const updatedUser = await User.findOneAndUpdate(
             { _id: user._id },
-            { $addToSet: { teams: team._id } },
+            { $addToSet: { teamMemberOf: team._id } },
             { new: true, runValidators: true }
         ).select('-password -__v');
 
@@ -31,9 +37,9 @@ router.post('/', auth, async ({ user, body }, res) => {
 
 // Get a single team that a user belongs to
 // Get route - private
-router.get('/', auth, async ({ body }, res) => {
+router.get('/:teamId', auth, async ({ params }, res) => {
     try {
-        const team = await Team.findOne({ _id: body._id });
+        const team = await Team.findOne({ _id: params.teamId });
 
         if (!team) {
             return res.status(404).json({ message: 'Team not found.' });
@@ -85,6 +91,8 @@ router.put('/:id/members', auth, async ({ body, params }, res) => {
             return res.status(404).json({ message: 'Team not found.' });
         }
 
+        // add
+
         res.json(updatedTeam);
     } catch (err) {
         console.error(`Error: ${err.message}`);
@@ -128,9 +136,9 @@ router.delete('/:teamId', auth, async ({ params }, res) => {
             return res.status(404).json({ message: 'Team not found.' });
         }
 
-        const updatedUsers = await User.updateMany(
-            { teams: params.teamId },
-            { $pull: { teams: params.teamId } },
+        await User.updateMany(
+            { teamMemberOf: params.teamId },
+            { $pull: { teamMemberOf: params.teamId } },
             { new: true, runValidators: true }
         );
 
