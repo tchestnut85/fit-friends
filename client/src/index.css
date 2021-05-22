@@ -1,3 +1,6 @@
+/* ------------------------------------------------------------ */
+/* Global Styling Start */
+
 :root {
     --primaryColor: #89ea6e;
     --secondaryColor: black;
@@ -17,7 +20,6 @@
     /* font-size: 16px; */
 }
 
-/* Element Styling Start */
 h1 {
     font-size: 2.25rem;
 }
@@ -65,62 +67,37 @@ li {
     padding: 0.5rem;
 }
 
-/* End Element Styling */
+/* End Global Styling */
+/* ------------------------------------------------------------ */
 
-/* NavBar Start */
-
-.nav-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: var(--primaryColor);
-    width: 100%;
-}
-
-.nav-header h1 {
-    align-content: center;
-}
-
-.run-icon {
-    height: 3rem;
-    width: 3rem;
-}
-
-.nav-list a {
-    color: var(--lightColor);
-    padding: 0.5rem;
-    margin: 0 0.5rem;
-    background-color: var(--thirdColor);
-    border-radius: 3px;
-}
-
-.nav-list a:hover {
-    opacity: 0.8;
-}
-
-.nav-list a:active {
-    background-color: var(--darkColor);
-}
-
-/* NavBar End */
-
+/* ------------------------------------------------------------ */
 /* UTILITY CLASSES START */
 
 /* Flex Box */
 .centered {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.col-centered {
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
 .space-around {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
 }
 
 .space-between {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
 }
@@ -195,3 +172,63 @@ li {
     margin-left: var(--spacingThree);
 }
 /* END UTILITY CLASSES */
+/* ------------------------------------------------------------ */
+
+/* ------------------------------------------------------------ */
+/* Component Styling START  */
+
+/* NavBar ------------------------ */
+
+.nav-header {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+    background-color: var(--primaryColor);
+    width: 100%;
+}
+
+.nav-header h1 {
+    align-content: center;
+}
+
+.run-icon {
+    height: 3rem;
+    width: 3rem;
+}
+
+.nav-list a {
+    color: var(--lightColor);
+    padding: 0.5rem;
+    margin: 0 0.5rem;
+    background-color: var(--thirdColor);
+    border-radius: 3px;
+}
+
+.nav-list a:hover {
+    opacity: 0.8;
+}
+
+.nav-list a:active {
+    background-color: var(--darkColor);
+}
+
+/* NavBar End ------------------------ */
+
+/* Forms ------------------------ */
+
+.form-container {
+    display: flex;
+    align-items: flex-start;
+}
+
+.form-item {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+/* Forms End ------------------------ */
+
+/* Component Styling END */
+/* ------------------------------------------------------------ */
