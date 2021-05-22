@@ -16,7 +16,7 @@ const NavBar = () => {
                 </h1>
             </div>
             <nav>
-                <ul className='space-around'>
+                <ul className='space-around nav-list'>
                     <li>
                         <Link to='/joinchallenge'>Join a Challenge</Link>
                     </li>
