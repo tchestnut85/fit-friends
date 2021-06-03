@@ -1,3 +1,4 @@
-export const LOGGED_IN = 'LOGGED_IN';
-export const SET_CURRENT_USER = 'SET_CURRENT_USER';
+export const LOGIN = 'LOGIN';
+export const REGISTER = 'REGISTER';
 export const UPDATE_USER = 'UPDATE_USER';
+export const LOGOUT = 'LOGOUT';

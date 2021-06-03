@@ -35,7 +35,7 @@ class AuthService {
     // Store the token in localStorage
     login(idToken) {
         localStorage.setItem('fit_friends_token', idToken);
-        window.location.assign('/');
+        // window.location.assign('/');
     }
 
     // Clear user token and profile data from localStorage

@@ -67,6 +67,26 @@ li {
     padding: 0.5rem;
 }
 
+button {
+    padding: 0.5rem 1rem;
+    background-color: var(--primaryColor);
+    border-radius: 3px;
+    border: none;
+    color: var(--darkColor);
+    font-weight: bold;
+    transition: ease-in-out 0.25s;
+}
+
+button:hover {
+    transition: ease-in-out 0.25s;
+    opacity: 0.8;
+}
+
+button:active {
+    background-color: var(--secondaryColor);
+    color: var(--primaryColor);
+}
+
 /* End Global Styling */
 /* ------------------------------------------------------------ */
 
@@ -219,7 +239,7 @@ li {
 
 .form-container {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
 }
 
 .form-item {

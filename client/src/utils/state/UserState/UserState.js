@@ -9,7 +9,7 @@ const UserProvider = ({ value = [], ...props }) => {
     const [state, dispatch] = useUserReducer({
         // set the initial state of the user
         user: {},
-        isLoggedIn: null,
+        isLoggedIn: false,
     });
 
     return <Provider value={[state, dispatch]} {...props} />;

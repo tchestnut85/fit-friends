@@ -1,15 +1,24 @@
-import { LOGGED_IN, SET_CURRENT_USER, UPDATE_USER } from './userActions';
+import { LOGIN, REGISTER, UPDATE_USER } from './userActions';
 
 import { useReducer } from 'react';
 
 export const reducer = (state, action) => {
     switch (action.type) {
-        case LOGGED_IN:
+        case LOGIN:
+        case REGISTER:
             return {
                 ...state,
                 isLoggedIn: true,
+                user: {
+                    id: action.payload.id,
+                    email: action.payload.email,
+                    name: action.payload.name,
+                    username: action.payload.username,
+                    teamMemberOf: action.payload.teamMemberOf,
+                    teamsOwned: action.payload.teamsOwned,
+                    createdAt: action.payload.createdAt,
+                },
             };
-        case SET_CURRENT_USER:
         case UPDATE_USER:
             return {
                 ...state,

@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 
 import Auth from '../utils/auth';
+import { REGISTER } from '../utils/state/UserState/userActions';
 import { createUser } from '../utils/API';
+import { useUserContext } from '../utils/state/UserState/UserState';
 
-const Signup = () => {
+export const Signup = ({ history }) => {
+    const [, dispatch] = useUserContext();
+
     const [user, setUser] = useState({
         name: '',
         username: '',
@@ -40,13 +44,20 @@ const Signup = () => {
                 username,
                 password,
             });
+            const data = await response.json();
 
             if (!response.ok) {
                 throw new Error('There was an error when trying to sign up.');
             }
 
-            const { token } = await response.json();
+            dispatch({
+                type: REGISTER,
+                payload: data.user,
+            });
+
+            const { token } = data;
             Auth.login(token);
+            history.push('/home');
         } catch (err) {
             console.error(err);
             errorDisplay(err.message);
@@ -67,6 +78,8 @@ const Signup = () => {
                         type='text'
                         name='name'
                         value={name}
+                        autoComplete='name'
+                        placeholder='your full name'
                         required
                         onChange={handleChange}
                     />
@@ -77,6 +90,8 @@ const Signup = () => {
                         type='text'
                         name='username'
                         value={username}
+                        autoComplete='username'
+                        placeholder='your username'
                         required
                         onChange={handleChange}
                     />
@@ -87,6 +102,8 @@ const Signup = () => {
                         type='email'
                         name='email'
                         value={email}
+                        autoComplete='email'
+                        placeholder='your email'
                         required
                         onChange={handleChange}
                     />
@@ -97,6 +114,8 @@ const Signup = () => {
                         type='password'
                         name='password'
                         value={password}
+                        autoComplete='new-password'
+                        placeholder='******'
                         required
                         onChange={handleChange}
                     />
@@ -107,18 +126,16 @@ const Signup = () => {
                         type='password'
                         name='password2'
                         value={password2}
+                        autoComplete='confirm-password'
+                        placeholder='******'
                         required
                         onChange={handleChange}
                     />
                 </div>
 
-                <button type='submit'>Submit</button>
+                <button type='submit'>Register</button>
             </form>
-            {errorMessage && (
-                <p className='error'>There was an error: {errorMessage}</p>
-            )}
+            {errorMessage && <p className='error'>{errorMessage}</p>}
         </main>
     );
 };
-
-export default Signup;
