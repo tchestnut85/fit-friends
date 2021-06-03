@@ -1,4 +1,4 @@
-import { LOGIN, REGISTER, UPDATE_USER } from './userActions';
+import { LOGIN, LOGOUT, REGISTER, UPDATE_USER } from './userActions';
 
 import { useReducer } from 'react';
 
@@ -18,6 +18,12 @@ export const reducer = (state, action) => {
                     teamsOwned: action.payload.teamsOwned,
                     createdAt: action.payload.createdAt,
                 },
+            };
+        case LOGOUT:
+            return {
+                ...state,
+                user: {},
+                isLoggedIn: false,
             };
         case UPDATE_USER:
             return {

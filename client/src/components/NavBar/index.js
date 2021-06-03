@@ -1,10 +1,18 @@
 import Auth from '../../utils/auth';
+import { LOGOUT } from '../../utils/state/UserState/userActions';
 import { Link } from 'react-router-dom';
 import React from 'react';
 import runIcon from '../../images/run_circle_black.svg';
+import { useUserContext } from '../../utils/state/UserState/UserState';
 
 const NavBar = () => {
-    const logout = (e) => {
+    const [, dispatch] = useUserContext();
+
+    const logout = () => {
+        dispatch({
+            type: LOGOUT,
+        });
+
         Auth.logout();
     };
 
@@ -41,7 +49,7 @@ const NavBar = () => {
                             <Link to='/login'>Login</Link>
                         </li>
                         <li>
-                            <Link to='/register'>Join</Link>
+                            <Link to='/'>Join</Link>
                         </li>
                     </ul>
                 )}
