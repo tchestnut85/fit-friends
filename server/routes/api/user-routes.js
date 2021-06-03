@@ -8,13 +8,13 @@ router.post('/', async ({ body }, res) => {
         let user = await User.findOne({ email: body.email });
 
         if (user) {
-            return res.status(400).json({ message: 'User already exists.' });
+            return res.status(400).send({ message: 'User already exists.' });
         }
 
         user = await User.create(body);
 
         if (!user) {
-            return res.status(400).json({
+            return res.status(400).send({
                 message: 'There was an error when creating the user.',
             });
         }

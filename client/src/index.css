@@ -1,13 +1,260 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* ------------------------------------------------------------ */
+/* Global Styling Start */
+
+:root {
+    --primaryColor: #89ea6e;
+    --secondaryColor: black;
+    --thirdColor: #696969;
+    --darkColor: #000000;
+    --lightColor: rgb(245, 245, 245);
+    --spacingOne: calc(1rem * 0.5);
+    --spacingTwo: calc(1rem);
+    --spacingThree: calc(2rem);
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* font-size: 16px; */
 }
+
+h1 {
+    font-size: 2.25rem;
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+h3 {
+    font-size: 1.75rem;
+}
+
+h4 {
+    font-size: 1.5rem;
+}
+
+h5 {
+    font-size: 1.25rem;
+}
+
+h6 {
+    font-size: 1rem;
+}
+
+a,
+a:link,
+a:visited,
+a:active,
+a:hover {
+    text-decoration: none;
+    color: var(--secondaryColor);
+}
+
+li {
+    list-style: none;
+    padding: 0.5rem;
+}
+
+a {
+    text-decoration: none;
+}
+
+li {
+    list-style: none;
+    padding: 0.5rem;
+}
+
+button {
+    padding: 0.5rem 1rem;
+    background-color: var(--primaryColor);
+    border-radius: 3px;
+    border: none;
+    color: var(--darkColor);
+    font-weight: bold;
+    transition: ease-in-out 0.25s;
+}
+
+button:hover {
+    transition: ease-in-out 0.25s;
+    opacity: 0.8;
+}
+
+button:active {
+    background-color: var(--secondaryColor);
+    color: var(--primaryColor);
+}
+
+/* End Global Styling */
+/* ------------------------------------------------------------ */
+
+/* ------------------------------------------------------------ */
+/* UTILITY CLASSES START */
+
+/* Flex Box */
+.centered {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.col-centered {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.space-around {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.space-between {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Margins */
+.m {
+    margin: 0.5rem;
+}
+
+.mx-1 {
+    margin-right: var(--spacingOne);
+    margin-left: var(--spacingOne);
+}
+
+.mx-2 {
+    margin-right: var(--spacingTwo);
+    margin-left: var(--spacingTwo);
+}
+
+.mx-3 {
+    margin-right: var(--spacingThree);
+    margin-left: var(--spacingThree);
+}
+
+.my-1 {
+    margin-top: var(--spacingOne);
+    margin-bottom: var(--spacingOne);
+}
+
+.my-2 {
+    margin-top: var(--spacingTwo);
+    margin-bottom: var(--spacingTwo);
+}
+
+.my-3 {
+    margin-right: var(--spacingThree);
+    margin-left: var(--spacingThree);
+}
+
+/* Padding */
+.p {
+    padding: 0.5rem;
+}
+
+.px-1 {
+    padding-right: var(--spacingOne);
+    padding-left: var(--spacingOne);
+}
+
+.px-2 {
+    padding-right: var(--spacingTwo);
+    padding-left: var(--spacingTwo);
+}
+
+.px-3 {
+    margin-right: var(--spacingThree);
+    margin-left: var(--spacingThree);
+}
+
+.py-1 {
+    padding-top: var(--spacingOne);
+    padding-bottom: var(--spacingOne);
+}
+
+.py-2 {
+    padding-top: var(--spacingTwo);
+    padding-bottom: var(--spacingTwo);
+}
+
+.py-3 {
+    margin-right: var(--spacingThree);
+    margin-left: var(--spacingThree);
+}
+/* END UTILITY CLASSES */
+/* ------------------------------------------------------------ */
+
+/* ------------------------------------------------------------ */
+/* Component Styling START  */
+
+/* NavBar ------------------------ */
+
+.nav-header {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+    background-color: var(--primaryColor);
+    width: 100%;
+}
+
+.nav-header h1 {
+    align-content: center;
+}
+
+.run-icon {
+    height: 3rem;
+    width: 3rem;
+}
+
+.nav-list a {
+    color: var(--lightColor);
+    padding: 0.5rem;
+    margin: 0 0.5rem;
+    background-color: var(--thirdColor);
+    border-radius: 3px;
+}
+
+.nav-list a:hover {
+    opacity: 0.8;
+}
+
+.nav-list a:active {
+    background-color: var(--darkColor);
+}
+
+/* NavBar End ------------------------ */
+
+/* Forms ------------------------ */
+
+.form-container {
+    display: flex;
+    align-items: center;
+}
+
+.form-item {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.error {
+    margin: 1.5rem;
+    font-size: 1.2rem;
+    color: red;
+}
+
+/* Forms End ------------------------ */
+
+/* Component Styling END */
+/* ------------------------------------------------------------ */
