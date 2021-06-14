@@ -9,6 +9,7 @@ import { useUserContext } from '../utils/state/UserState/UserState';
 export const Home = () => {
     const [state, dispatch] = useUserContext();
     const { user } = state;
+    console.log('user:', user);
 
     // Fetch the loggedin user's data by decoding the JWT from Auth
     const getUserData = async () => {
@@ -26,7 +27,6 @@ export const Home = () => {
             }
 
             const user = await response.json();
-            console.log('Home.js - line 34 - user:', user);
 
             dispatch({
                 type: SET_USER,
@@ -49,7 +49,15 @@ export const Home = () => {
 
     return (
         <main>
-            <h2>Hi {user.name}!</h2>
+            <h2 className='centered py-2'>Hi, {user.name}!</h2>
+            <section className='grid-container mx-1'>
+                <div className='grid-item'>User Info: {user.username}</div>
+                <div className='grid-item'>
+                    Teams Joined: {user.teamMemberOf}
+                </div>
+                <div className='grid-item'>Teams Owned: {user.teamsOwned}</div>
+                <div className='grid-item'>User Stats:</div>
+            </section>
         </main>
     );
 };

@@ -122,6 +122,19 @@ button:active {
     align-items: center;
 }
 
+/* Grid */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 20px;
+    text-align: center;
+}
+
+.grid-item {
+    height: 200px;
+}
+
 /* Margins */
 .m {
     margin: 0.5rem;
