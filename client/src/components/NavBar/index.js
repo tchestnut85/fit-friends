@@ -6,7 +6,8 @@ import runIcon from '../../images/run_circle_black.svg';
 import { useUserContext } from '../../utils/state/UserState/UserState';
 
 const NavBar = () => {
-    const [, dispatch] = useUserContext();
+    const [state, dispatch] = useUserContext();
+    // console.log('Auth.loggedIn:', Auth.loggedIn());
 
     const logout = () => {
         dispatch({
@@ -29,7 +30,7 @@ const NavBar = () => {
                 </h1>
             </div>
             <nav>
-                {Auth.loggedIn() ? (
+                {state.isLoggedIn || Auth.loggedIn() ? (
                     <ul className='space-around nav-list'>
                         <li>
                             <Link to='/joinchallenge'>Join a Challenge</Link>

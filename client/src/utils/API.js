@@ -9,6 +9,7 @@ export const createUser = (user) => {
     });
 };
 
+// Request to login a user
 export const loginUser = (user) => {
     return fetch('/api/users/login', {
         method: 'POST',
@@ -16,5 +17,16 @@ export const loginUser = (user) => {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(user),
+    });
+};
+
+// Request to get the current logged in user's data
+export const getCurrentUser = (token) => {
+    return fetch('/api/users/me', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            authorization: `Bearer ${token}`,
+        },
     });
 };
