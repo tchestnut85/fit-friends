@@ -53,7 +53,10 @@ export const Home = () => {
             <section className='grid-container mx-1'>
                 <div className='grid-item'>User Info: {user.username}</div>
                 <div className='grid-item'>
-                    Teams Joined: {user.teamMemberOf}
+                    Teams Joined:{' '}
+                    {user.teamMemberOf
+                        ? user.teamMemberOf
+                        : `${user.name}, you don't belong to any teams yet. You can start a team or join a friend's team!`}
                 </div>
                 <div className='grid-item'>Teams Owned: {user.teamsOwned}</div>
                 <div className='grid-item'>User Stats:</div>
