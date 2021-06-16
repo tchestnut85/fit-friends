@@ -1,12 +1,12 @@
-import { LOGIN, LOGOUT, REGISTER, UPDATE_USER } from './userActions';
+import { LOGOUT, SET_USER, UPDATE_USER } from './userActions';
+import { clearData, getData, saveData } from '../../localStorage';
 
 import { useReducer } from 'react';
 
 export const reducer = (state, action) => {
     switch (action.type) {
-        case LOGIN:
-        case REGISTER:
-            return {
+        case SET_USER:
+            const data = {
                 ...state,
                 isLoggedIn: true,
                 user: {
@@ -19,7 +19,10 @@ export const reducer = (state, action) => {
                     createdAt: action.payload.createdAt,
                 },
             };
+            saveData(data);
+            return data;
         case LOGOUT:
+            clearData();
             return {
                 ...state,
                 user: {},

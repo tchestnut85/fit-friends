@@ -8,7 +8,7 @@ const { Provider } = UserContext;
 const UserProvider = ({ value = [], ...props }) => {
     const [state, dispatch] = useUserReducer({
         // set the initial state of the user
-        user: {},
+        user: null,
         isLoggedIn: false,
     });
 

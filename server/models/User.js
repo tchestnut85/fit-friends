@@ -15,6 +15,11 @@ const userSchema = new Schema(
             required: true,
             trim: true,
         },
+        bio: {
+            type: String,
+            trim: true,
+            maxLength: 150,
+        },
         email: {
             type: String,
             required: true,

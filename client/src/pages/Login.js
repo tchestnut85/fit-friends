@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import Auth from '../utils/auth';
 import { FaExclamationTriangle } from 'react-icons/fa';
-import { LOGIN } from '../utils/state/UserState/userActions';
+import { SET_USER } from '../utils/state/UserState/userActions';
 import { loginUser } from '../utils/API';
 import { useUserContext } from '../utils/state/UserState/UserState';
 
@@ -42,7 +42,7 @@ export const Login = ({ history }) => {
             }
 
             dispatch({
-                type: LOGIN,
+                type: SET_USER,
                 payload: data.user,
             });
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import Auth from '../utils/auth';
-import { REGISTER } from '../utils/state/UserState/userActions';
+import { SET_USER } from '../utils/state/UserState/userActions';
 import { createUser } from '../utils/API';
 import { useUserContext } from '../utils/state/UserState/UserState';
 
@@ -51,7 +51,7 @@ export const Signup = ({ history }) => {
             }
 
             dispatch({
-                type: REGISTER,
+                type: SET_USER,
                 payload: data.user,
             });
 
