@@ -1,6 +1,7 @@
 import { LOGOUT, SET_USER, UPDATE_USER } from './userActions';
 import { clearData, getData, saveData } from '../../localStorage';
 
+import Auth from '../../../utils/auth';
 import { useReducer } from 'react';
 
 export const reducer = (state, action) => {
@@ -22,6 +23,7 @@ export const reducer = (state, action) => {
             saveData(data);
             return data;
         case LOGOUT:
+            Auth.logout();
             clearData();
             return {
                 ...state,

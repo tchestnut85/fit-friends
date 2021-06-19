@@ -7,14 +7,11 @@ import { useUserContext } from '../../utils/state/UserState/UserState';
 
 const NavBar = () => {
     const [state, dispatch] = useUserContext();
-    // console.log('Auth.loggedIn:', Auth.loggedIn());
 
     const logout = () => {
         dispatch({
             type: LOGOUT,
         });
-
-        Auth.logout();
     };
 
     return (
