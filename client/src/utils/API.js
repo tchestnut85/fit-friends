@@ -30,3 +30,15 @@ export const getCurrentUser = (token) => {
         },
     });
 };
+
+// Request to create a new team
+export const createTeam = (token, team) => {
+    return fetch('/api/teams', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(team),
+    });
+};

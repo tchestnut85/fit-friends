@@ -3,6 +3,7 @@ import './index.css';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 
 import Auth from './utils/auth';
+import { CreateChallenge } from './pages/CreateChallenge';
 import { Home } from './pages/Home';
 import { Login } from './pages/Login';
 import NavBar from './components/NavBar';
@@ -25,6 +26,11 @@ function App() {
                         <Route exact path='/signup' component={Signup} />
                         <Route exact path='/login' component={Login} />
                         <Route exact path='/home' component={Home} />
+                        <Route
+                            exact
+                            path='/createchallenge'
+                            component={CreateChallenge}
+                        />
                     </Switch>
                 </div>
             </UserProvider>
