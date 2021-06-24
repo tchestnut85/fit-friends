@@ -1,7 +1,7 @@
-import { Card, Icon, Image, List } from 'semantic-ui-react';
 import React, { useEffect } from 'react';
 
 import Auth from '../utils/auth';
+import { Card } from 'semantic-ui-react';
 import { HomepageCard } from '../components/HomepageCard';
 import { Loading } from '../components/Loading';
 import { SET_USER } from '../utils/state/UserState/userActions';
@@ -62,8 +62,9 @@ export const Home = () => {
             <h2 className='heading-light centered py-2'>Hi, {user.name}!</h2>
             <section className='grid-container'>
                 <Card className='grid-home-1'>
-                    {/* Using my Github profile pic as a placeholder */}
-                    <Image src='https://avatars.githubusercontent.com/u/67440557?v=4' />
+                    <div className='centered'>
+                        <i class='fas fa-user-circle fa-10x'></i>
+                    </div>
                     <Card.Content>
                         <Card.Header>{user.name}</Card.Header>
                         <Card.Meta>{`Username: ${user.username}`}</Card.Meta>
