@@ -1,12 +1,14 @@
 // TODO items:
-// todo 1: Make a reusable input component to clean up the member inputs
-// todo 2: refactor the useState form state mgmt to clean it up.
-// todo 3: Refactor the form state handlers to be cleaner. Maybe a switch statement
+// DONE 1: Make a reusable input component to clean up the member inputs
+// todo 2: finish the handleSubmit function form submission to create a new team. Need to use the createTeam function
+// todo 3: refactor the useState form state mgmt to clean it up.
+// todo 4: Refactor the form state handlers to be cleaner. Maybe a switch statement
 
 import { Button, Form, Input, Select } from 'semantic-ui-react';
 import React, { useEffect, useState } from 'react';
 import { createTeam, getCurrentUser } from '../utils/API';
 
+import { AddMemberInput } from '../components/AddMemberInput';
 import Auth from '../utils/auth';
 import { SET_USER } from '../utils/state/UserState/userActions';
 import { challengeTypes } from '../utils/challengeTypes';
@@ -129,64 +131,40 @@ export const CreateChallenge = () => {
                     {/* Add members - for now, user must know other user's username and we'll search that to get the user's ID  */}
                     <div className='col-centered'>
                         <label>Add Team Members</label>
-                        <Input
-                            type='text'
+                        <AddMemberInput
+                            handleMember={handleMember}
+                            teamFormState={teamFormState}
+                            setTeamFormState={setTeamFormState}
                             name='member1'
-                            value={member1}
-                            placeholder='Add a Team Member'
-                            required
-                            onChange={handleMember}
-                            onBlur={() =>
-                                setTeamFormState({
-                                    ...teamFormState,
-                                    members: [...members, member1],
-                                })
-                            }
+                            member={member1}
+                            members={members}
                         />
-                        <Input
-                            type='text'
+                        <AddMemberInput
+                            handleMember={handleMember}
+                            teamFormState={teamFormState}
+                            setTeamFormState={setTeamFormState}
                             name='member2'
-                            value={member2}
-                            placeholder='Add a Team Member'
-                            required
-                            onChange={handleMember}
-                            onBlur={() =>
-                                setTeamFormState({
-                                    ...teamFormState,
-                                    members: [...members, member2],
-                                })
-                            }
+                            member={member2}
+                            members={members}
                         />
-                        <Input
-                            type='text'
+                        <AddMemberInput
+                            handleMember={handleMember}
+                            teamFormState={teamFormState}
+                            setTeamFormState={setTeamFormState}
                             name='member3'
-                            value={member3}
-                            placeholder='Add a Team Member'
-                            required
-                            onChange={handleMember}
-                            onBlur={() =>
-                                setTeamFormState({
-                                    ...teamFormState,
-                                    members: [...members, member3],
-                                })
-                            }
+                            member={member3}
+                            members={members}
                         />
-                        <Input
-                            type='text'
+                        <AddMemberInput
+                            handleMember={handleMember}
+                            teamFormState={teamFormState}
+                            setTeamFormState={setTeamFormState}
                             name='member4'
-                            value={member4}
-                            placeholder='Add a Team Member'
-                            required
-                            onChange={handleMember}
-                            onBlur={() =>
-                                setTeamFormState({
-                                    ...teamFormState,
-                                    members: [...members, member4],
-                                })
-                            }
+                            member={member4}
+                            members={members}
                         />
                     </div>
-                    <Button type='submit'>Submit!</Button>
+                    <Button type='submit'>Go!</Button>
 
                     {/* duration */}
                 </Form>
