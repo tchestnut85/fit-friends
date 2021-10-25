@@ -1,100 +1,80 @@
 import React, { useState } from 'react';
 
-import Auth from '../utils/auth';
 import { FaExclamationTriangle } from 'react-icons/fa';
-import { SET_USER } from '../utils/state/UserState/userActions';
-import { loginUser } from '../utils/API';
-import { useUserContext } from '../utils/state/UserState/UserState';
+import { connect } from 'react-redux';
+import { loginAction } from '../utils/redux/user';
 
-export const Login = ({ history }) => {
-    const [, dispatch] = useUserContext();
+const Login = ({ history, loginAction }) => {
+  const [user, setUser] = useState({
+    email: '',
+    password: '',
+  });
+  const { email, password } = user;
 
-    const [user, setUser] = useState({
-        email: '',
-        password: '',
-    });
-    const { email, password } = user;
+  const [errorMessage, setErrorMessage] = useState(null);
 
-    const [errorMessage, setErrorMessage] = useState(null);
+  const errorDisplay = message => {
+    setErrorMessage(message);
+    setTimeout(() => setErrorMessage(null), 5000);
+  };
 
-    const errorDisplay = (message) => {
-        setErrorMessage(message);
-        setTimeout(() => setErrorMessage(null), 5000);
-    };
+  const handleChange = e => {
+    const { name, value } = e.target;
+    setUser({ ...user, [name]: value });
+  };
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setUser({ ...user, [name]: value });
-    };
+  const handleSubmit = async e => {
+    e.preventDefault();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    try {
+      console.log('try');
+      loginAction({ email, password });
+      history.push('/home');
+    } catch (err) {
+      console.error(err);
+      errorDisplay(err.message);
+    }
+  };
 
-        try {
-            const response = await loginUser({
-                email,
-                password,
-            });
-            const data = await response.json();
+  return (
+    <main className='col-centered'>
+      <h2>Login To Your Account</h2>
 
-            if (!response.ok) {
-                throw new Error('There was an error when trying to login.');
-            }
+      <form className='col-centered form-container' onSubmit={handleSubmit}>
+        <div className='form-item mx-2 my-2'>
+          <label htmlFor='email'>Your Email</label>
+          <input
+            type='email'
+            name='email'
+            placeholder='your email'
+            value={email}
+            autoComplete='email'
+            required
+            onChange={handleChange}
+          />
+        </div>
+        <div className='form-item mx-2 my-2'>
+          <label htmlFor='password'>Password</label>
+          <input
+            type='password'
+            name='password'
+            placeholder='******'
+            value={password}
+            autoComplete='current-password'
+            required
+            onChange={handleChange}
+          />
+        </div>
 
-            dispatch({
-                type: SET_USER,
-                payload: data.user,
-            });
-
-            const { token } = data;
-            Auth.login(token);
-            history.push('/home');
-        } catch (err) {
-            console.error(err);
-            errorDisplay(err.message);
-        }
-    };
-
-    return (
-        <main className='col-centered'>
-            <h2>Login To Your Account</h2>
-
-            <form
-                className='col-centered form-container'
-                onSubmit={handleSubmit}
-            >
-                <div className='form-item mx-2 my-2'>
-                    <label htmlFor='email'>Your Email</label>
-                    <input
-                        type='email'
-                        name='email'
-                        placeholder='your email'
-                        value={email}
-                        autoComplete='email'
-                        required
-                        onChange={handleChange}
-                    />
-                </div>
-                <div className='form-item mx-2 my-2'>
-                    <label htmlFor='password'>Password</label>
-                    <input
-                        type='password'
-                        name='password'
-                        placeholder='******'
-                        value={password}
-                        autoComplete='current-password'
-                        required
-                        onChange={handleChange}
-                    />
-                </div>
-
-                <button type='submit'>Login</button>
-            </form>
-            {errorMessage && (
-                <p className='error'>
-                    <FaExclamationTriangle /> {errorMessage}
-                </p>
-            )}
-        </main>
-    );
+        <button type='submit'>Login</button>
+      </form>
+      {errorMessage && (
+        <p className='error'>
+          <FaExclamationTriangle /> {errorMessage}
+        </p>
+      )}
+    </main>
+  );
 };
+
+export default connect(null, { loginAction })(Login);
