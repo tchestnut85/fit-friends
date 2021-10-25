@@ -1,6 +1,7 @@
+import { getCurrentUser, loginUser } from '../API';
+
 import Auth from '../auth';
 import { MESSAGES } from '../constants';
-import { loginUser } from '../API';
 
 // action types
 const SET_USER = 'SET_USER';
@@ -11,11 +12,9 @@ const LOGOUT_USER = 'LOGOUT_USER';
 export const loginAction = user => async dispatch => {
   try {
     const response = await loginUser(user);
-    console.log('response:', response);
     if (!response.ok) throw new Error(MESSAGES.error.login);
 
     const data = await response.json();
-    console.log('data:', data);
 
     dispatch({ type: SET_USER, payload: data.user });
 
@@ -26,7 +25,22 @@ export const loginAction = user => async dispatch => {
   }
 };
 
-export const getUser = () => {};
+export const getUserData = () => async dispatch => {
+  // Fetch the loggedin user's data by sending JWT to server
+  // and decoding it
+  try {
+    const token = Auth.loggedIn() ? Auth.getToken() : null;
+    if (!token) return false;
+
+    const response = await getCurrentUser(token);
+    if (!response.ok) throw new Error(MESSAGES.error.userData);
+
+    const data = await response.json();
+    dispatch({ type: SET_USER, payload: data });
+  } catch (err) {
+    console.error(err);
+  }
+};
 
 export const setUser = () => {};
 

@@ -27,7 +27,6 @@ const Login = ({ history, loginAction }) => {
     e.preventDefault();
 
     try {
-      console.log('try');
       loginAction({ email, password });
       history.push('/home');
     } catch (err) {
